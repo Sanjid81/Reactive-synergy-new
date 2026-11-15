@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
+
+// config
+@import "./config/variables";
+@import "./config/breakpoints";
+@import "./config/typography";
+@import "./config/globals";
+@import "./config/animations";
+
+// layout
+@import "../components/utilities/header";
+@import "../components/utilities/footer";
+@import "../components/home/hero";
+@import "../components/home/excellence";
+@import "../components/home/reasons";
+@import "../components/home/products";
+@import "../components/home/process";
+@import "../components/home/compliance";
+@import "../components/home/brands";
+@import "../components/home/snapshot";
+@import "../components/page/banner";
+@import "../components/page/split";
+@import "../components/page/pages";
+@import "../components/page/library";
+@import "../components/page/team";
+@import "../components/page/quote";
+@import "../components/page/faq";
+@import "../components/page/projects";
+@import "../components/page/blog";

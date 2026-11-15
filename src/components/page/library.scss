@@ -1,0 +1,120 @@
+.library {
+    padding: 20px 0 120px;
+
+    .library-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .library-tab {
+        min-height: 44px;
+        padding: 10px 24px;
+        border: 1px solid var(--primary);
+        border-radius: 4px;
+        background: var(--white);
+        color: var(--primary);
+        font-family: var(--font-primary);
+        font-size: 16px;
+        line-height: 24px;
+        cursor: pointer;
+    }
+
+    .library-tab.is-active {
+        background: var(--primary);
+        color: var(--white);
+    }
+
+    .library-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+    }
+
+    .library-photo,
+    .library-video {
+        width: min(445px, 100%);
+        height: 300px;
+        object-fit: cover;
+    }
+
+    .library-video {
+        position: relative;
+        padding: 0;
+        border: 0;
+        background: var(--ink);
+        cursor: pointer;
+        overflow: hidden;
+
+        .library-photo {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .library-play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 70px;
+        height: 70px;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+
+        svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .library-dialog {
+        width: min(960px, calc(100% - 40px));
+        padding: 0;
+        border: 0;
+        background: transparent;
+
+        &::backdrop {
+            background: rgba(5, 5, 8, 0.72);
+        }
+
+        iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: 0;
+            background: #000;
+        }
+    }
+
+    .library-close {
+        position: absolute;
+        top: -42px;
+        right: 0;
+        width: 36px;
+        height: 36px;
+        border: 0;
+        border-radius: 50%;
+        background: var(--white);
+        color: var(--ink);
+        font-size: 24px;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    @include breakpoint-max(lg) {
+        padding-bottom: 64px;
+
+        .library-video,
+        .library-photo {
+            height: auto;
+            aspect-ratio: 445 / 300;
+        }
+
+        .library-play {
+            width: 56px;
+            height: 56px;
+        }
+    }
+}

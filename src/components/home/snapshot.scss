@@ -1,0 +1,46 @@
+.snapshot {
+    padding: 100px 0;
+
+    .snapshot-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        align-items: center;
+    }
+
+    .heading-two {
+        max-width: 543px;
+        margin-bottom: 20px;
+    }
+
+    .rich-text {
+        max-width: 453px;
+    }
+
+    .btn {
+        margin-top: 12px;
+    }
+
+    .snapshot-media {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .snapshot-chart {
+        width: min(480px, 100%);
+        height: auto;
+        object-fit: contain;
+    }
+
+    @include breakpoint-max(lg) {
+        padding: 64px 0;
+
+        .snapshot-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .snapshot-media {
+            justify-content: flex-start;
+        }
+    }
+}

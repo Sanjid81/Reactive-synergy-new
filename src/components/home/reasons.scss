@@ -1,0 +1,112 @@
+.reasons {
+    background: var(--primary-soft);
+    padding: 80px 0 60px;
+    overflow: hidden;
+
+    .reasons-intro {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .reasons-intro .rich-text {
+        max-width: 500px;
+        margin: 20px auto 0;
+    }
+
+    .reasons-slider-wrap {
+        position: relative;
+    }
+
+    .reasons-slider {
+        overflow: hidden;
+    }
+
+    .swiper-wrapper {
+        transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reason-card {
+        height: auto;
+        min-height: 351px;
+        box-sizing: border-box;
+        background: var(--white);
+        border: 1px solid var(--line);
+        padding: 49px 37px;
+    }
+
+    .reason-head {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .reason-number {
+        width: 76px;
+        height: 76px;
+        flex-shrink: 0;
+        background: var(--primary);
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 50px;
+        line-height: 1;
+        letter-spacing: 1.8px;
+    }
+
+    .reason-card .body-text {
+        margin-top: 33px;
+        color: var(--muted);
+    }
+
+    .reasons-arrow {
+        position: absolute;
+        top: 50%;
+        width: 56px;
+        height: 52px;
+        border: 1px solid var(--line);
+        background: var(--white);
+        transform: translateY(-50%);
+        z-index: 2;
+        cursor: pointer;
+        transition: background 0.25s ease;
+    }
+
+    .reasons-prev {
+        left: -90px;
+    }
+
+    .reasons-next {
+        right: -90px;
+    }
+
+    .reasons-arrow:hover {
+        background: var(--primary);
+        color: var(--white);
+    }
+
+    .reasons-arrow.swiper-button-disabled {
+        opacity: 0.4;
+        cursor: default;
+    }
+
+    @include breakpoint-max(xxl) {
+        .reasons-prev { left: 0; }
+        .reasons-next { right: 0; }
+    }
+
+    @include breakpoint-max(lg) {
+        .reason-card {
+            min-height: 0;
+        }
+    }
+
+    @include breakpoint-max(sm) {
+        padding: 48px 0 40px;
+
+        .reasons-arrow {
+            width: 40px;
+            height: 36px;
+        }
+    }
+}

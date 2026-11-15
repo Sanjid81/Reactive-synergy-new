@@ -1,0 +1,235 @@
+.quote-block {
+    padding: 108px 0 128px;
+    background: #fff6e6;
+    overflow: hidden;
+
+    > .container {
+        width: min(1320px, calc(100% - 48px));
+    }
+
+    .quote-slider-wrap {
+        position: relative;
+    }
+
+    .quote-card {
+        position: relative;
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 12px 8px 0;
+        text-align: center;
+        background: transparent;
+    }
+
+    .quote-map {
+        position: absolute;
+        left: 50%;
+        top: 46%;
+        width: min(1180px, 140%);
+        transform: translate(-50%, -46%);
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.55;
+
+        svg {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .quote-slider,
+    .quote-slides,
+    .quote-slide {
+        position: relative;
+        z-index: 1;
+    }
+
+    .quote-mark,
+    blockquote,
+    figcaption {
+        position: relative;
+        z-index: 1;
+    }
+
+    .quote-mark {
+        display: block;
+        margin-bottom: 22px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 108px;
+        font-weight: 700;
+        line-height: 0.7;
+        background: linear-gradient(100deg, var(--secondary) 0%, #f07a22 46%, var(--primary) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    blockquote {
+        max-width: 980px;
+        margin: 0 auto;
+        color: var(--ink);
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1.45;
+        letter-spacing: -0.3px;
+        overflow-wrap: anywhere;
+    }
+
+    figcaption {
+        margin-top: 42px;
+    }
+
+    figcaption.has-photo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        max-width: 100%;
+        text-align: left;
+    }
+
+    .quote-photo {
+        flex: none;
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: var(--white);
+        box-shadow: 0 10px 24px rgba(5, 5, 8, 0.1);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .quote-person,
+    strong,
+    span {
+        display: block;
+    }
+
+    strong {
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    span {
+        margin-top: 8px;
+        color: #8d8d99;
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+    .quote-dots {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        margin-top: 40px;
+        bottom: auto;
+        left: auto;
+
+        .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            margin: 0;
+            border-radius: 999px;
+            background: rgba(5, 5, 8, 0.2);
+            opacity: 1;
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+
+        .swiper-pagination-bullet-active {
+            width: 28px;
+            background: var(--primary);
+        }
+    }
+
+    @include breakpoint-max(lg) {
+        padding: 88px 0 100px;
+
+        .quote-mark {
+            font-size: 84px;
+        }
+
+        blockquote {
+            font-size: 28px;
+        }
+
+        strong {
+            font-size: 20px;
+        }
+    }
+
+    @include breakpoint-max(md) {
+        padding: 72px 0 84px;
+
+        .quote-mark {
+            font-size: 72px;
+        }
+
+        blockquote {
+            font-size: 24px;
+            letter-spacing: 0;
+        }
+
+        figcaption {
+            margin-top: 32px;
+        }
+
+        .quote-photo {
+            width: 60px;
+            height: 60px;
+        }
+    }
+
+    @include breakpoint-max(sm) {
+        padding: 56px 0 64px;
+
+        > .container {
+            width: min(1320px, calc(100% - 32px));
+        }
+
+        .quote-mark {
+            margin-bottom: 16px;
+            font-size: 60px;
+        }
+
+        blockquote {
+            font-size: 20px;
+            line-height: 1.5;
+        }
+
+        strong {
+            font-size: 18px;
+        }
+
+        span {
+            font-size: 14px;
+        }
+
+        figcaption.has-photo {
+            gap: 12px;
+        }
+
+        .quote-photo {
+            width: 52px;
+            height: 52px;
+        }
+
+        .quote-map {
+            width: 180%;
+        }
+    }
+
+    @include breakpoint-max(xs) {
+        blockquote {
+            font-size: 18px;
+        }
+    }
+}

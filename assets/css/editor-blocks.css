@@ -1,0 +1,56 @@
+.editor-styles-wrapper .wp-block[data-type^="carbon-fields/"],
+.block-editor-block-list__block[data-type^="carbon-fields/"] {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 16px 16px 8px;
+    border: 1px solid #c8cdd6;
+    border-left: 4px solid #feaf06;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.editor-styles-wrapper .wp-block[data-type^="carbon-fields/"].is-selected,
+.block-editor-block-list__block[data-type^="carbon-fields/"].is-selected,
+.editor-styles-wrapper .wp-block[data-type^="carbon-fields/"].is-highlighted,
+.block-editor-block-list__block[data-type^="carbon-fields/"].is-highlighted {
+    border-color: #feaf06;
+    box-shadow: 0 0 0 1px #feaf06;
+}
+
+.mastrade-block-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 12px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    background: #111118;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.mastrade-block-label span {
+    color: #feaf06;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.mastrade-block-label strong {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.cf-field.cf-html:has(.mastrade-block-label) {
+    flex: 1 1 100%;
+    width: 100%;
+}
+
+.cf-field.cf-html:has(.mastrade-block-label) .cf-field__head {
+    display: none;
+}

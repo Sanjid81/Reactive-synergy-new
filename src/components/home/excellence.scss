@@ -1,0 +1,85 @@
+.excellence {
+    padding: 100px 0;
+
+    .excellence-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        align-items: start;
+    }
+
+    .heading-two {
+        max-width: 543px;
+        margin-bottom: 20px;
+    }
+
+    .rich-text {
+        max-width: 453px;
+    }
+
+    .stat-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 28px;
+    }
+
+    .stat-card {
+        background: var(--card);
+        border-radius: 8px;
+        min-height: 104px;
+        padding: 24px;
+        text-align: center;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn {
+        margin-top: 28px;
+    }
+
+    .excellence-photos {
+        position: relative;
+        min-height: 535px;
+    }
+
+    .excellence-photos .photo-main {
+        width: min(480px, 88%);
+        height: 535px;
+        object-fit: cover;
+        margin-left: auto;
+    }
+
+    .excellence-photos .photo-detail {
+        position: absolute;
+        left: 0;
+        top: 225px;
+        width: min(350px, 62%);
+        height: 370px;
+        object-fit: cover;
+        background: var(--white);
+        box-shadow: 0 12px 30px rgba(5, 5, 8, 0.12);
+    }
+
+    @include breakpoint-max(lg) {
+        padding: 64px 0;
+
+        .excellence-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .excellence-photos {
+            min-height: 0;
+        }
+
+        .excellence-photos .photo-main,
+        .excellence-photos .photo-detail {
+            position: static;
+            width: 100%;
+            height: auto;
+            margin: 0 0 16px;
+        }
+    }
+}

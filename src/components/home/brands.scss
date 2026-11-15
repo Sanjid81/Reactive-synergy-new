@@ -1,0 +1,53 @@
+.brands {
+    padding: 120px 0;
+    background: var(--primary-soft);
+
+    .brands-intro {
+        max-width: 500px;
+        margin-top: 20px;
+    }
+
+    .brand-marquee {
+        margin-top: 40px;
+        overflow: hidden;
+    }
+
+    .brand-track {
+        display: flex;
+        width: max-content;
+        animation: brand-scroll 28s linear infinite;
+    }
+
+    .brand-set {
+        display: flex;
+        align-items: center;
+        gap: 48px;
+        padding-right: 48px;
+    }
+
+    .brand-logo {
+        height: 48px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .brands-action {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+    }
+
+    @include breakpoint-max(lg) {
+        padding: 72px 0;
+    }
+}
+
+@keyframes brand-scroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}

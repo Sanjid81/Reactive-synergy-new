@@ -1,0 +1,115 @@
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes zoom-in {
+    from { transform: scale(1.08); }
+    to { transform: none; }
+}
+
+$ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+.has-motion {
+    .site-header {
+        animation: fade-in 0.7s $ease both;
+    }
+
+    .hero-zoom,
+    .banner-zoom {
+        animation: zoom-in 1.3s $ease both;
+    }
+
+    .hero-rise,
+    .banner-rise {
+        animation: fade-up 0.9s 0.18s $ease both;
+    }
+
+    .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.8s $ease, transform 0.8s $ease;
+        transition-delay: var(--reveal-delay, 0ms);
+    }
+
+    .reveal-in {
+        transform: none;
+    }
+
+    .reveal-zoom {
+        transform: scale(0.94);
+    }
+
+    .reveal-left {
+        transform: translateX(-32px);
+    }
+
+    .reveal-right {
+        transform: translateX(32px);
+    }
+
+    .reveal.is-in {
+        opacity: 1;
+        transform: none;
+    }
+
+    .catalog-grid > :nth-child(3n + 2),
+    .library-grid > :nth-child(3n + 2),
+    .media-grid-items > :nth-child(3n + 2),
+    .stat-grid > :nth-child(3n + 2) {
+        --reveal-delay: 80ms;
+    }
+
+    .catalog-grid > :nth-child(3n + 3),
+    .library-grid > :nth-child(3n + 3),
+    .media-grid-items > :nth-child(3n + 3),
+    .stat-grid > :nth-child(3n + 3) {
+        --reveal-delay: 160ms;
+    }
+
+    .brands-intro.reveal,
+    .contact-form.reveal { --reveal-delay: 90ms; }
+    .brands-action.reveal,
+    .contact-map.reveal { --reveal-delay: 160ms; }
+
+    .product-row:nth-of-type(2) { --reveal-delay: 80ms; }
+    .product-row:nth-of-type(3) { --reveal-delay: 140ms; }
+    .product-row:nth-of-type(4) { --reveal-delay: 200ms; }
+
+    .footer-grid > :nth-child(2) { --reveal-delay: 90ms; }
+    .footer-grid > :nth-child(3) { --reveal-delay: 160ms; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .has-motion .site-header,
+    .has-motion .hero-zoom,
+    .has-motion .banner-zoom,
+    .has-motion .hero-rise,
+    .has-motion .banner-rise,
+    .has-motion .reveal,
+    .brand-track {
+        opacity: 1;
+        transform: none;
+        animation: none;
+        transition: none;
+    }
+}
+
+@media (scripting: none) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
+}

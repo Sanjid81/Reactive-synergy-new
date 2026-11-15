@@ -1,0 +1,30 @@
+$font-body: "Open Sans", sans-serif;
+
+:root {
+    --primary: #feaf06;
+    --primary-hover: #e49d05;
+    --secondary: #e14a4f;
+    --secondary-hover: #ca4247;
+    --primary-soft: #fff6e6;
+    --navy: #273167;
+    --ink: #050508;
+    --muted: #414155;
+    --white: #ffffff;
+    --card: #f7f7f7;
+    --footer: #08081c;
+    --overlay: rgba(26, 23, 49, 0.6);
+    --line: rgba(5, 5, 8, 0.1);
+    --white-80: rgba(255, 255, 255, 0.8);
+    --white-60: rgba(255, 255, 255, 0.6);
+    --font-primary: #{$font-body};
+    --text-dark: var(--ink);
+    --body-bg: var(--white);
+    --header-height: 100px;
+    --screen-top: 0px;
+}
+
+@media (max-width: 768px) {
+    :root {
+        --header-height: 72px;
+    }
+}

@@ -1,0 +1,63 @@
+.page-banner {
+    position: relative;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    text-align: center;
+    overflow: hidden;
+
+    img,
+    .page-banner-shade {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .page-banner-shade {
+        background: var(--overlay);
+    }
+
+    .heading-two {
+        position: relative;
+        z-index: 1;
+        color: var(--white);
+        max-width: 900px;
+        padding: 40px 20px;
+    }
+
+    @include breakpoint-max(sm) {
+        min-height: 260px;
+
+        .heading-two {
+            padding: 28px 16px;
+        }
+    }
+}
+
+.breadcrumb {
+    padding: 18px 24px;
+
+    @include breakpoint-max(sm) {
+        padding: 16px 20px;
+    }
+
+    ol {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        width: min(1140px, 100%);
+        margin: 0 auto;
+        padding: 0;
+        list-style: none;
+        color: var(--muted);
+    }
+
+    a {
+        color: var(--ink);
+    }
+}
