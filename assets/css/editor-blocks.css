@@ -54,3 +54,36 @@
 .cf-field.cf-html:has(.mastrade-block-label) .cf-field__head {
     display: none;
 }
+
+.cf-field[data-mastrade-tab] .cf-complex__groups > .cf-complex__group {
+    display: none !important;
+}
+
+.cf-field[data-mastrade-tab="1"] .cf-complex__groups > .cf-complex__group:nth-child(1),
+.cf-field[data-mastrade-tab="2"] .cf-complex__groups > .cf-complex__group:nth-child(2),
+.cf-field[data-mastrade-tab="3"] .cf-complex__groups > .cf-complex__group:nth-child(3),
+.cf-field[data-mastrade-tab="4"] .cf-complex__groups > .cf-complex__group:nth-child(4),
+.cf-field[data-mastrade-tab="5"] .cf-complex__groups > .cf-complex__group:nth-child(5),
+.cf-field[data-mastrade-tab="6"] .cf-complex__groups > .cf-complex__group:nth-child(6),
+.cf-field[data-mastrade-tab="7"] .cf-complex__groups > .cf-complex__group:nth-child(7),
+.cf-field[data-mastrade-tab="8"] .cf-complex__groups > .cf-complex__group:nth-child(8),
+.cf-field[data-mastrade-tab="9"] .cf-complex__groups > .cf-complex__group:nth-child(9),
+.cf-field[data-mastrade-tab="10"] .cf-complex__groups > .cf-complex__group:nth-child(10),
+.cf-field[data-mastrade-tab="11"] .cf-complex__groups > .cf-complex__group:nth-child(11),
+.cf-field[data-mastrade-tab="12"] .cf-complex__groups > .cf-complex__group:nth-child(12),
+.cf-field[data-mastrade-tab="13"] .cf-complex__groups > .cf-complex__group:nth-child(13),
+.cf-field[data-mastrade-tab="14"] .cf-complex__groups > .cf-complex__group:nth-child(14),
+.cf-field[data-mastrade-tab="15"] .cf-complex__groups > .cf-complex__group:nth-child(15),
+.cf-field[data-mastrade-tab="16"] .cf-complex__groups > .cf-complex__group:nth-child(16),
+.cf-field[data-mastrade-tab="17"] .cf-complex__groups > .cf-complex__group:nth-child(17),
+.cf-field[data-mastrade-tab="18"] .cf-complex__groups > .cf-complex__group:nth-child(18),
+.cf-field[data-mastrade-tab="19"] .cf-complex__groups > .cf-complex__group:nth-child(19),
+.cf-field[data-mastrade-tab="20"] .cf-complex__groups > .cf-complex__group:nth-child(20) {
+    display: block !important;
+}
+
+.cf-complex__tabs-item--current {
+    background: #fff;
+    border-color: #feaf06;
+    box-shadow: inset 0 -2px 0 #feaf06;
+}

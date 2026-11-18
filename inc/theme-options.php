@@ -24,6 +24,8 @@ add_action('carbon_fields_register_fields', function () {
             Field::make('textarea', 'office_address', __('Address', 'mastrade')),
             Field::make('text', 'office_phone', __('Phone', 'mastrade')),
             Field::make('text', 'office_email', __('Email', 'mastrade')),
+            Field::make('rich_text', 'footer_text', __('Text Under Logo', 'mastrade'))
+                ->set_help_text(__('Paragraphs and links shown under the footer logo.', 'mastrade')),
             Field::make('complex', 'social_links', __('Social Links', 'mastrade'))
                 ->add_fields(array(
                     Field::make('select', 'network', __('Network', 'mastrade'))
@@ -34,10 +36,6 @@ add_action('carbon_fields_register_fields', function () {
                             'youtube' => 'YouTube',
                         )),
                     Field::make('text', 'url', __('URL', 'mastrade')),
-                )),
-            Field::make('complex', 'footer_gallery', __('Gallery', 'mastrade'))
-                ->add_fields(array(
-                    Field::make('image', 'image', __('Image', 'mastrade')),
                 )),
         ));
 

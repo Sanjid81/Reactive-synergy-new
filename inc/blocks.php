@@ -50,6 +50,71 @@ add_action('carbon_fields_register_fields', function () {
             include THEME_DIR . '/components/home/excellence.php';
         });
 
+    Block::make('mastrade-advantage', __('Our Advantage', 'mastrade'))
+        ->set_icon('cover-image')
+        ->set_category('theme', __('Mastrade', 'mastrade'), 'admin-home')
+        ->add_fields(array(
+            mastrade_block_label('Our Advantage'),
+            Field::make('image', 'background', __('Background Image', 'mastrade')),
+            Field::make('file', 'video', __('Background Video', 'mastrade'))
+                ->set_type('video'),
+            Field::make('text', 'eyebrow', __('Eyebrow', 'mastrade')),
+            Field::make('text', 'heading', __('Heading', 'mastrade')),
+            Field::make('text', 'button_text', __('Button Text', 'mastrade')),
+            Field::make('text', 'button_link', __('Button Link', 'mastrade')),
+            Field::make('complex', 'cards', __('Cards', 'mastrade'))
+                ->set_header_template('<%- title ? title : "Card" %>')
+                ->add_fields(array(
+                    Field::make('select', 'icon', __('Icon', 'mastrade'))
+                        ->set_default_value('layers')
+                        ->add_options(array(
+                            'layers' => __('Stacked layers', 'mastrade'),
+                            'sewing' => __('Sewing machine', 'mastrade'),
+                            'custom' => __('Custom order', 'mastrade'),
+                        )),
+                    Field::make('image', 'icon_image', __('Custom Icon', 'mastrade')),
+                    Field::make('text', 'title', __('Title', 'mastrade')),
+                    Field::make('textarea', 'text', __('Text', 'mastrade')),
+                )),
+        ))
+        ->set_render_callback(function ($fields) {
+            include THEME_DIR . '/components/home/advantage.php';
+        });
+
+    Block::make('mastrade-workflow', __('Working Process', 'mastrade'))
+        ->set_icon('editor-ol')
+        ->set_category('theme', __('Mastrade', 'mastrade'), 'admin-home')
+        ->add_fields(array(
+            mastrade_block_label('Working Process'),
+            Field::make('text', 'eyebrow', __('Eyebrow', 'mastrade')),
+            Field::make('text', 'heading', __('Heading', 'mastrade')),
+            Field::make('complex', 'steps', __('Steps', 'mastrade'))
+                ->set_header_template('<%- number ? number + ". " : "" %><%- title ? title : "Step" %>')
+                ->add_fields(array(
+                    Field::make('image', 'image', __('Icon', 'mastrade')),
+                    Field::make('select', 'icon', __('Built-in Icon', 'mastrade'))
+                        ->set_default_value('inquiry')
+                        ->add_options(array(
+                            'inquiry' => __('Buyer inquiry', 'mastrade'),
+                            'sourcing' => __('Product sourcing', 'mastrade'),
+                            'yarn' => __('Yarn and accessories', 'mastrade'),
+                            'costing' => __('Costing', 'mastrade'),
+                            'sample' => __('Sampling', 'mastrade'),
+                            'approval' => __('Buyer approval', 'mastrade'),
+                            'production' => __('Production', 'mastrade'),
+                            'quality' => __('Quality control', 'mastrade'),
+                            'packing' => __('Packing', 'mastrade'),
+                            'shipment' => __('Shipment', 'mastrade'),
+                        )),
+                    Field::make('text', 'number', __('Number', 'mastrade')),
+                    Field::make('text', 'title', __('Title', 'mastrade')),
+                    Field::make('textarea', 'text', __('Text', 'mastrade')),
+                )),
+        ))
+        ->set_render_callback(function ($fields) {
+            include THEME_DIR . '/components/home/workflow.php';
+        });
+
     Block::make('mastrade-reasons', __('Why Mastrade', 'mastrade'))
         ->set_icon('slides')
         ->set_category('theme', __('Mastrade', 'mastrade'))
@@ -112,12 +177,21 @@ add_action('carbon_fields_register_fields', function () {
         ->set_category('theme', __('Mastrade', 'mastrade'))
         ->add_fields(array(
             mastrade_block_label('Compliance'),
-            Field::make('image', 'image_main', __('Main Image', 'mastrade')),
             Field::make('image', 'image_detail', __('Detail Image', 'mastrade')),
             Field::make('text', 'heading', __('Heading', 'mastrade')),
             Field::make('rich_text', 'content', __('Content', 'mastrade')),
             Field::make('text', 'button_text', __('Button Text', 'mastrade')),
             Field::make('text', 'button_link', __('Button Link', 'mastrade')),
+            Field::make('complex', 'logos', __('Logos', 'mastrade'))
+                ->set_layout('tabbed-horizontal')
+                ->setup_labels(array(
+                    'plural_name' => __('Logos', 'mastrade'),
+                    'singular_name' => __('Logo', 'mastrade'),
+                ))
+                ->add_fields(array(
+                    Field::make('image', 'image', __('Logo', 'mastrade')),
+                ))
+                ->set_header_template('<%- $_index + 1 %>'),
         ))
         ->set_render_callback(function ($fields) {
             include THEME_DIR . '/components/home/compliance.php';
@@ -270,6 +344,28 @@ add_action('carbon_fields_register_fields', function () {
             include THEME_DIR . '/components/page/pair.php';
         });
 
+    Block::make('mastrade-contact-cards', __('Contact Cards', 'mastrade'))
+        ->set_icon('phone')
+        ->set_category('theme', __('Mastrade', 'mastrade'))
+        ->add_fields(array(
+            mastrade_block_label('Contact Cards'),
+            Field::make('complex', 'cards', __('Cards', 'mastrade'))
+                ->setup_labels(array(
+                    'plural_name' => __('Cards', 'mastrade'),
+                    'singular_name' => __('Card', 'mastrade'),
+                ))
+                ->add_fields(array(
+                    Field::make('image', 'image', __('Icon', 'mastrade'))
+                        ->set_help_text(__('Upload or replace this image to change the card icon.', 'mastrade')),
+                    Field::make('text', 'title', __('Title', 'mastrade')),
+                    Field::make('textarea', 'text', __('Text', 'mastrade')),
+                ))
+                ->set_header_template('<%- title ? title : ($_index + 1) %>'),
+        ))
+        ->set_render_callback(function ($fields) {
+            include THEME_DIR . '/components/page/contact-cards.php';
+        });
+
     Block::make('mastrade-contact', __('Contact', 'mastrade'))
         ->set_icon('email')
         ->set_category('theme', __('Mastrade', 'mastrade'))
@@ -341,6 +437,116 @@ add_action('carbon_fields_register_fields', function () {
         ))
         ->set_render_callback(function ($fields) {
             include THEME_DIR . '/components/page/team.php';
+        });
+
+    Block::make('mastrade-testimonials', __('Testimonials', 'mastrade'))
+        ->set_icon('format-quote')
+        ->set_category('theme', __('Mastrade', 'mastrade'), 'admin-home')
+        ->add_fields(array(
+            mastrade_block_label('Testimonials'),
+            Field::make('text', 'eyebrow', __('Eyebrow', 'mastrade')),
+            Field::make('text', 'heading', __('Heading', 'mastrade')),
+            Field::make('complex', 'items', __('Testimonials', 'mastrade'))
+                ->set_layout('tabbed-horizontal')
+                ->setup_labels(array(
+                    'plural_name' => __('Testimonials', 'mastrade'),
+                    'singular_name' => __('Testimonial', 'mastrade'),
+                ))
+                ->add_fields(array(
+                    Field::make('image', 'image', __('Photo', 'mastrade')),
+                    Field::make('textarea', 'quote', __('Quote', 'mastrade')),
+                    Field::make('text', 'name', __('Name', 'mastrade')),
+                    Field::make('text', 'role', __('Role', 'mastrade')),
+                ))
+                ->set_header_template('<%- name ? name : ($_index + 1) %>'),
+        ))
+        ->set_render_callback(function ($fields) {
+            include THEME_DIR . '/components/home/testimonials.php';
+        });
+
+    Block::make('mastrade-quote-banner', __('Quote Banner', 'mastrade'))
+        ->set_icon('email')
+        ->set_category('theme', __('Mastrade', 'mastrade'), 'admin-home')
+        ->add_fields(array(
+            mastrade_block_label('Quote Banner'),
+            Field::make('image', 'background', __('Background Image', 'mastrade')),
+            Field::make('file', 'video', __('Background Video', 'mastrade'))
+                ->set_type('video'),
+            Field::make('text', 'form_title', __('Form Title', 'mastrade')),
+            Field::make('textarea', 'form_text', __('Form Text', 'mastrade')),
+            Field::make('text', 'form_shortcode', __('Contact Form 7 Shortcode', 'mastrade')),
+            Field::make('text', 'eyebrow', __('Eyebrow', 'mastrade')),
+            Field::make('text', 'heading', __('Heading', 'mastrade')),
+            Field::make('text', 'address_label', __('Address Label', 'mastrade')),
+            Field::make('textarea', 'address', __('Address', 'mastrade')),
+            Field::make('text', 'whatsapp_label', __('WhatsApp Label', 'mastrade')),
+            Field::make('text', 'whatsapp', __('WhatsApp Number', 'mastrade')),
+            Field::make('text', 'email', __('Email', 'mastrade')),
+            Field::make('text', 'button_text', __('Button Text', 'mastrade')),
+            Field::make('text', 'button_link', __('Button Link', 'mastrade')),
+        ))
+        ->set_render_callback(function ($fields) {
+            include THEME_DIR . '/components/home/quote-banner.php';
+        });
+
+    Block::make('mastrade-figures', __('Figures', 'mastrade'))
+        ->set_icon('chart-bar')
+        ->set_category('theme', __('Mastrade', 'mastrade'))
+        ->add_fields(array(
+            mastrade_block_label('Figures'),
+            Field::make('image', 'background', __('Background Image', 'mastrade')),
+            Field::make('file', 'video', __('Background Video', 'mastrade'))
+                ->set_type('video'),
+            Field::make('text', 'eyebrow', __('Eyebrow', 'mastrade')),
+            Field::make('text', 'heading', __('Heading', 'mastrade')),
+            Field::make('textarea', 'text', __('Text', 'mastrade')),
+            Field::make('complex', 'stats', __('Figures', 'mastrade'))
+                ->setup_labels(array(
+                    'plural_name' => __('Figures', 'mastrade'),
+                    'singular_name' => __('Figure', 'mastrade'),
+                ))
+                ->add_fields(array(
+                    Field::make('text', 'number', __('Number', 'mastrade'))
+                        ->set_help_text(__('Type the full figure, such as 16+, 690K, or 99%. It counts up on the page.', 'mastrade')),
+                    Field::make('text', 'label', __('Label', 'mastrade')),
+                    Field::make('textarea', 'text', __('Text', 'mastrade')),
+                ))
+                ->set_header_template('<%- number ? number : ($_index + 1) %>'),
+        ))
+        ->set_render_callback(function ($fields) {
+            include THEME_DIR . '/components/page/figures.php';
+        });
+
+    Block::make('mastrade-process-track', __('Process Steps', 'mastrade'))
+        ->set_icon('editor-ol')
+        ->set_category('theme', __('Mastrade', 'mastrade'))
+        ->add_fields(array(
+            mastrade_block_label('Process Steps'),
+            Field::make('text', 'eyebrow', __('Eyebrow', 'mastrade')),
+            Field::make('text', 'heading', __('Heading', 'mastrade')),
+            Field::make('complex', 'steps', __('Steps', 'mastrade'))
+                ->setup_labels(array(
+                    'plural_name' => __('Steps', 'mastrade'),
+                    'singular_name' => __('Step', 'mastrade'),
+                ))
+                ->add_fields(array(
+                    Field::make('image', 'image', __('Icon', 'mastrade')),
+                    Field::make('select', 'icon', __('Built-in Icon', 'mastrade'))
+                        ->set_default_value('board')
+                        ->add_options(array(
+                            'board' => __('Presentation board', 'mastrade'),
+                            'partnership' => __('Partnership', 'mastrade'),
+                            'factory' => __('Factory', 'mastrade'),
+                            'globe' => __('Globe', 'mastrade'),
+                        )),
+                    Field::make('text', 'title', __('Title', 'mastrade')),
+                    Field::make('textarea', 'text', __('Text', 'mastrade')),
+                    Field::make('text', 'number', __('Watermark Number', 'mastrade')),
+                ))
+                ->set_header_template('<%- title ? title : ($_index + 1) %>'),
+        ))
+        ->set_render_callback(function ($fields) {
+            include THEME_DIR . '/components/page/process-track.php';
         });
 
     Block::make('mastrade-quote', __('Quote', 'mastrade'))

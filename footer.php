@@ -7,8 +7,8 @@ $option = function ($key) {
 };
 
 $logo = $option('footer_logo');
+$about = $option('footer_text');
 $social = $option('social_links');
-$gallery = $option('footer_gallery');
 $office_title = $option('office_title');
 $address = $option('office_address');
 $phone = $option('office_phone');
@@ -26,44 +26,36 @@ $icons = array(
 ?>
 </main>
 
-<?php if (mastrade_has_content(array($logo, $social, $gallery, $address, $phone, $email, $copyright))) : ?>
+<?php if (mastrade_has_content(array($logo, $about, $social, $address, $phone, $email, $copyright))) : ?>
 <footer class="site-footer">
     <div class="container">
-        <div class="footer-brand reveal reveal-up">
-            <?php if ($logo) : ?>
-                <a class="footer-logo" href="<?php echo esc_url(home_url('/')); ?>">
-                    <?php echo wp_get_attachment_image($logo, 'full', false, array('alt' => esc_attr(get_bloginfo('name')))); ?>
-                </a>
-            <?php endif; ?>
-            <?php if (!empty($social)) : ?>
-                <div class="footer-social">
-                    <?php foreach ($social as $item) :
-                        $url = $item['url'] ?? '';
-                        $network = $item['network'] ?? '';
-                        if (!$url || empty($icons[$network])) {
-                            continue;
-                        }
-                        ?>
-                        <a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr($network); ?>">
-                            <?php echo $icons[$network]; ?>
-                        </a>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
-        </div>
-
         <div class="footer-grid">
-            <div class="reveal reveal-up">
-                <?php if ($office_title) : ?>
-                    <h2 class="footer-title heading-four"><?php echo esc_html($office_title); ?></h2>
+            <div class="footer-brand reveal reveal-up">
+                <?php if ($logo) : ?>
+                    <a class="footer-logo" href="<?php echo esc_url(home_url('/')); ?>">
+                        <?php echo wp_get_attachment_image($logo, 'full', false, array('alt' => esc_attr(get_bloginfo('name')))); ?>
+                    </a>
                 <?php endif; ?>
-                <ul class="footer-contact small-text">
-                    <?php if ($address) : ?><li><span><?php echo nl2br(esc_html($address)); ?></span></li><?php endif; ?>
-                    <?php if ($phone) : ?><li><a href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $phone)); ?>"><?php echo esc_html($phone); ?></a></li><?php endif; ?>
-                    <?php if ($email) : ?><li><a href="mailto:<?php echo esc_attr($email); ?>"><?php echo esc_html($email); ?></a></li><?php endif; ?>
-                </ul>
+                <?php if (trim(wp_strip_all_tags((string) $about))) : ?>
+                    <div class="footer-about"><?php echo wp_kses_post($about); ?></div>
+                <?php endif; ?>
+                <?php if (!empty($social)) : ?>
+                    <div class="footer-social">
+                        <?php foreach ($social as $item) :
+                            $url = $item['url'] ?? '';
+                            $network = $item['network'] ?? '';
+                            if (!$url || empty($icons[$network])) {
+                                continue;
+                            }
+                            ?>
+                            <a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr($network); ?>">
+                                <?php echo $icons[$network]; ?>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
-            <div class="reveal reveal-up">
+            <div class="footer-links-col reveal reveal-up">
                 <h2 class="footer-title heading-four"><?php esc_html_e('Useful Links', 'mastrade'); ?></h2>
                 <?php
                 wp_nav_menu(array(
@@ -74,16 +66,16 @@ $icons = array(
                 ));
                 ?>
             </div>
-            <?php if (!empty($gallery)) : ?>
-                <div class="footer-gallery reveal reveal-zoom">
-                    <?php foreach ($gallery as $item) :
-                        $image = mastrade_image($item['image'] ?? 0);
-                        if ($image) {
-                            echo $image;
-                        }
-                    endforeach; ?>
-                </div>
-            <?php endif; ?>
+            <div class="footer-office reveal reveal-up">
+                <?php if ($office_title) : ?>
+                    <h2 class="footer-title heading-four"><?php echo esc_html($office_title); ?></h2>
+                <?php endif; ?>
+                <ul class="footer-contact small-text">
+                    <?php if ($address) : ?><li><span><?php echo nl2br(esc_html($address)); ?></span></li><?php endif; ?>
+                    <?php if ($phone) : ?><li><a href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $phone)); ?>"><?php echo esc_html($phone); ?></a></li><?php endif; ?>
+                    <?php if ($email) : ?><li><a href="mailto:<?php echo esc_attr($email); ?>"><?php echo esc_html($email); ?></a></li><?php endif; ?>
+                </ul>
+            </div>
         </div>
 
         <div class="footer-bottom small-text reveal reveal-in">

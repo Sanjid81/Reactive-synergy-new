@@ -40,6 +40,11 @@
 
 .breadcrumb {
     padding: 18px 24px;
+    background: var(--white);
+
+    &:has(+ .workflow) {
+        background: #f6f6f4;
+    }
 
     @include breakpoint-max(sm) {
         padding: 16px 20px;

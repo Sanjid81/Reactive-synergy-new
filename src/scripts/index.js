@@ -1,6 +1,10 @@
 import "../styles/index.scss";
+import "./components/smooth-scroll";
 import "./components/header";
 import "./components/motion";
 import "./components/reasons";
 import "./components/quotes";
+import "./components/testimonials";
 import "./components/gallery";
+import "./components/figures";
+import "./components/process-track";

@@ -67,8 +67,8 @@ add_action('wp_enqueue_scripts', 'theme_enqueue_assets');
 
 function theme_editor_block_borders()
 {
-    $path = THEME_DIR . '/assets/css/editor-blocks.css';
-    if (!file_exists($path)) {
+    $css = THEME_DIR . '/assets/css/editor-blocks.css';
+    if (!file_exists($css)) {
         return;
     }
 
@@ -76,7 +76,38 @@ function theme_editor_block_borders()
         'theme-editor-blocks',
         THEME_URI . '/assets/css/editor-blocks.css',
         array(),
-        filemtime($path)
+        filemtime($css)
     );
+
+    $js = THEME_DIR . '/assets/js/editor-complex-tabs.js';
+    if (file_exists($js)) {
+        wp_enqueue_script(
+            'theme-editor-complex-tabs',
+            THEME_URI . '/assets/js/editor-complex-tabs.js',
+            array(),
+            filemtime($js),
+            true
+        );
+    }
 }
 add_action('enqueue_block_editor_assets', 'theme_editor_block_borders');
+
+function theme_editor_canvas_styles()
+{
+    if (!is_admin()) {
+        return;
+    }
+
+    $css = THEME_DIR . '/assets/css/editor-blocks.css';
+    if (!file_exists($css)) {
+        return;
+    }
+
+    wp_enqueue_style(
+        'theme-editor-blocks-canvas',
+        THEME_URI . '/assets/css/editor-blocks.css',
+        array(),
+        filemtime($css)
+    );
+}
+add_action('enqueue_block_assets', 'theme_editor_canvas_styles');

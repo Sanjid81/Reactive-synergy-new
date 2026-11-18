@@ -25,7 +25,7 @@ function mastrade_register_project_type()
         'menu_icon' => 'dashicons-portfolio',
         'menu_position' => 21,
         'rewrite' => array('slug' => 'projects'),
-        'supports' => array('title', 'thumbnail'),
+        'supports' => array('title', 'editor', 'thumbnail'),
         'show_in_rest' => false,
     ));
 }

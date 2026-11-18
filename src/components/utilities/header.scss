@@ -187,13 +187,60 @@ body.admin-bar .site-header {
             margin: 8px 0;
         }
 
+        .menu .menu-item:hover > .sub-menu,
+        .menu .menu-item:focus-within > .sub-menu {
+            display: block;
+            max-height: 0;
+            margin-top: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .menu-item-has-children > a::after {
+            transition: transform 0.35s ease;
+        }
+
         .menu .sub-menu {
             position: static;
             display: block;
+            width: 100%;
             min-width: 0;
-            padding: 0 0 8px 16px;
-            border-radius: 0;
+            max-height: 0;
+            margin-top: 0;
+            padding: 0 8px 0 20px;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #fff3e0;
             box-shadow: none;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.4s ease, padding 0.4s ease, visibility 0s linear 0.4s;
+        }
+
+        .menu .menu-item-has-children.is-open > .sub-menu,
+        .menu .menu-item-has-children.is-open:hover > .sub-menu,
+        .menu .menu-item-has-children.is-open:focus-within > .sub-menu {
+            max-height: 280px;
+            margin-top: 4px;
+            padding: 6px 8px 6px 20px;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.4s ease, padding 0.4s ease, visibility 0s linear 0s;
+        }
+
+        .menu .menu-item-has-children.is-open > a::after {
+            transform: translateY(2px) rotate(225deg);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .menu .sub-menu,
+            .menu-item-has-children > a::after {
+                transition: none;
+            }
         }
 
         .menu .sub-menu a {

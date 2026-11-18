@@ -1,7 +1,15 @@
 .site-footer {
     background: var(--footer);
     color: var(--white-80);
-    padding-top: 30px;
+    padding-top: 48px;
+
+    .container {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding-right: 35px;
+        padding-left: 35px;
+    }
 
     a {
         color: inherit;
@@ -10,16 +18,42 @@
     .footer-brand {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        padding-bottom: 30px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        align-items: flex-start;
+        gap: 18px;
     }
 
     .footer-logo img {
         width: 179px;
         height: 53px;
         object-fit: contain;
+    }
+
+    .footer-about {
+        max-width: 320px;
+        color: var(--white-80);
+        font-size: 14px;
+        line-height: 1.6;
+
+        p,
+        ul,
+        ol {
+            margin-bottom: 10px;
+        }
+
+        ul,
+        ol {
+            padding-left: 18px;
+        }
+
+        a {
+            color: var(--white);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+
+            &:hover {
+                color: var(--primary);
+            }
+        }
     }
 
     .footer-social {
@@ -45,9 +79,9 @@
 
     .footer-grid {
         display: grid;
-        grid-template-columns: 252px 274px 1fr;
-        gap: 102px;
-        padding: 40px 0;
+        grid-template-columns: minmax(220px, 320px) minmax(200px, 280px) minmax(240px, 1fr);
+        gap: 40px 72px;
+        padding: 8px 0 40px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -78,18 +112,6 @@
         }
     }
 
-    .footer-gallery {
-        display: grid;
-        grid-template-columns: repeat(3, 116px);
-        gap: 15px;
-    }
-
-    .footer-gallery img {
-        width: 116px;
-        height: 116px;
-        object-fit: cover;
-    }
-
     .footer-bottom {
         display: flex;
         justify-content: space-between;
@@ -103,28 +125,38 @@
         gap: 42px;
     }
 
+    @include breakpoint-max(xxl) {
+        .container {
+            padding-right: 20px;
+            padding-left: 20px;
+        }
+    }
+
     @include breakpoint-max(xl) {
         .footer-grid {
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 36px;
+        }
+
+        .footer-links-col {
+            grid-column: 1 / -1;
         }
     }
 
     @include breakpoint-max(md) {
+        .container {
+            padding-right: 16px;
+            padding-left: 16px;
+        }
+
         .footer-grid,
         .footer-bottom {
             grid-template-columns: 1fr;
             display: grid;
         }
 
-        .footer-gallery {
-            grid-template-columns: repeat(3, 1fr);
-        }
-
-        .footer-gallery img {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 1;
+        .footer-links-col {
+            grid-column: auto;
         }
 
         .footer-legal {

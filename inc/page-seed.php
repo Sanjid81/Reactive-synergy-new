@@ -13,6 +13,12 @@ add_action('init', 'mastrade_refresh_team_page', 39);
 add_action('init', 'mastrade_refresh_team_layout', 40);
 add_action('init', 'mastrade_refresh_quote_fields', 41);
 add_action('init', 'mastrade_refresh_faq_layout', 42);
+add_action('init', 'mastrade_insert_figures_section', 43);
+add_action('init', 'mastrade_fix_figures_numbers', 44);
+add_action('init', 'mastrade_insert_process_track', 45);
+add_action('init', 'mastrade_insert_contact_cards', 46);
+add_action('init', 'mastrade_seed_contact_card_icons', 47);
+add_action('init', 'mastrade_fix_contact_card_ids', 48);
 
 function mastrade_refresh_inner_pages()
 {
@@ -56,7 +62,7 @@ function mastrade_refresh_inner_pages()
     $pages = array(
         'about-us' => mastrade_about_content($images),
         'products' => mastrade_products_page_content($images),
-        'our-buyers' => mastrade_banner_content($images['hero'], 'Trusted by Global Brands', 'Our Buyers') . mastrade_block('mastrade-gallery', array(
+        'our-buyers' => mastrade_banner_content($images['hero'], 'Trusted by Global Brands', 'Our Buyers') . mastrade_workflow_block() . mastrade_block('mastrade-gallery', array(
             'heading' => 'Trusted by Global Brands',
             'intro' => '',
             'fit' => 'cover',
@@ -94,6 +100,8 @@ function mastrade_refresh_inner_pages()
 function mastrade_about_content($images)
 {
     $content = mastrade_banner_content($images['hero'], 'About Mastrade International Garments Ltd.', 'About Us');
+    $content .= mastrade_figures_block($images);
+    $content .= mastrade_process_track_block();
 
     $content .= mastrade_block('mastrade-split', array(
         'media_side' => 'left',
@@ -520,6 +528,7 @@ function mastrade_refresh_profile()
 function mastrade_contact_page_content($images)
 {
     $content = mastrade_banner_content($images['hero'], 'Contact Us', 'Contact Us');
+    $content .= mastrade_contact_cards_block();
     $content .= mastrade_block('mastrade-contact', array(
         'heading' => 'Ask Your Query',
         'intro' => '<p>Have something to discuss? Our team is available to assist you at any time.</p>',
@@ -893,6 +902,467 @@ function mastrade_refresh_faq_layout()
     }
 
     update_option('mastrade_faq_v2', 1);
+
+    if ($previous_user) {
+        wp_set_current_user($previous_user);
+    }
+}
+
+function mastrade_figures_block($images = array())
+{
+    return mastrade_block('mastrade-figures', array(
+        'background' => $images['manufacturing_main'] ?? 0,
+        'eyebrow' => '03. THE IN CLEAR FIGURES',
+        'heading' => 'Shaping The Future Of The Textile Industry',
+        'text' => 'We believe in operating in a way that ensures a holistic view on taking care of our products & processes in a way that safeguards our planet and our people',
+        'stats' => array(
+            array(
+                '_type' => '_',
+                'number' => '16+',
+                'label' => 'Years Of Experience',
+                'text' => 'Decades of experience in delivering impactful digital solutions.',
+            ),
+            array(
+                '_type' => '_',
+                'number' => '690K',
+                'label' => 'Meters Month Output',
+                'text' => 'With efficient production of 850 tons of fabric per month',
+            ),
+            array(
+                '_type' => '_',
+                'number' => '99%',
+                'label' => 'Client Satisfaction Rate',
+                'text' => 'We build long-term partnerships through proven results.',
+            ),
+        ),
+    ));
+}
+
+function mastrade_insert_figures_section()
+{
+    if (get_option('mastrade_figures_v1') || !get_option('mastrade_seeded_v1')) {
+        return;
+    }
+
+    $page = get_page_by_path('about-us');
+    if (!$page) {
+        return;
+    }
+
+    if (strpos($page->post_content, 'mastrade-figures') !== false) {
+        update_option('mastrade_figures_v1', 1);
+        return;
+    }
+
+    $previous_user = get_current_user_id();
+    if (!current_user_can('unfiltered_html')) {
+        $admins = get_users(array(
+            'role' => 'administrator',
+            'number' => 1,
+            'fields' => 'ID',
+        ));
+        if ($admins) {
+            wp_set_current_user((int) $admins[0]);
+        }
+    }
+
+    $block = mastrade_figures_block(array(
+        'manufacturing_main' => mastrade_import_image('manufacturing-main.png'),
+    ));
+
+    wp_update_post(array(
+        'ID' => $page->ID,
+        'post_content' => wp_slash(mastrade_insert_block_after($page->post_content, $block, array(
+            'carbon-fields/mastrade-page-banner',
+        ))),
+    ));
+
+    update_option('mastrade_figures_v1', 1);
+
+    if ($previous_user) {
+        wp_set_current_user($previous_user);
+    }
+}
+
+function mastrade_fix_figures_numbers()
+{
+    if (get_option('mastrade_figures_number_v1') || !get_option('mastrade_seeded_v1')) {
+        return;
+    }
+
+    $page = get_page_by_path('about-us');
+    if (!$page || strpos($page->post_content, 'mastrade-figures') === false) {
+        return;
+    }
+
+    $previous_user = get_current_user_id();
+    if (!current_user_can('unfiltered_html')) {
+        $admins = get_users(array(
+            'role' => 'administrator',
+            'number' => 1,
+            'fields' => 'ID',
+        ));
+        if ($admins) {
+            wp_set_current_user((int) $admins[0]);
+        }
+    }
+
+    $defaults = array(
+        array('_type' => '_', 'number' => '16+', 'label' => 'Years Of Experience', 'text' => 'Decades of experience in delivering impactful digital solutions.'),
+        array('_type' => '_', 'number' => '690K', 'label' => 'Meters Month Output', 'text' => 'With efficient production of 850 tons of fabric per month'),
+        array('_type' => '_', 'number' => '99%', 'label' => 'Client Satisfaction Rate', 'text' => 'We build long-term partnerships through proven results.'),
+    );
+
+    $content = preg_replace_callback(
+        '/<!-- wp:carbon-fields\/mastrade-figures (\{.*?\}) \/-->/s',
+        function ($matches) use ($defaults) {
+            $json = json_decode($matches[1], true);
+            if (!is_array($json) || empty($json['data']) || !is_array($json['data'])) {
+                return $matches[0];
+            }
+
+            $stats = $json['data']['stats'] ?? array();
+            if (!is_array($stats) || !$stats) {
+                $json['data']['stats'] = $defaults;
+            } else {
+                foreach ($stats as $index => $stat) {
+                    if (!is_array($stat)) {
+                        continue;
+                    }
+                    if (array_key_exists('value', $stat) && !array_key_exists('number', $stat)) {
+                        $stat['number'] = $stat['value'];
+                        unset($stat['value']);
+                        $stats[$index] = $stat;
+                    }
+                }
+                $json['data']['stats'] = array_values($stats);
+            }
+
+            return '<!-- wp:carbon-fields/mastrade-figures ' . wp_json_encode($json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . ' /-->';
+        },
+        $page->post_content,
+        1
+    );
+
+    if (is_string($content) && $content !== $page->post_content) {
+        wp_update_post(array(
+            'ID' => $page->ID,
+            'post_content' => wp_slash($content),
+        ));
+    }
+
+    update_option('mastrade_figures_number_v1', 1);
+
+    if ($previous_user) {
+        wp_set_current_user($previous_user);
+    }
+}
+
+function mastrade_process_track_block()
+{
+    return mastrade_block('mastrade-process-track', array(
+        'eyebrow' => '04. OUR WORKING PROCESS',
+        'heading' => 'Description Textiles Process For Exceptional Results',
+        'steps' => array(
+            array(
+                '_type' => '_',
+                'icon' => 'board',
+                'title' => 'Improve And Evolve',
+                'text' => 'We review the design for enhancements and ongoing improvement.',
+                'number' => '03',
+            ),
+            array(
+                '_type' => '_',
+                'icon' => 'partnership',
+                'title' => 'Lasting Partnership',
+                'text' => 'We build strong client relationships through regular contact and feedback.',
+                'number' => '04',
+            ),
+            array(
+                '_type' => '_',
+                'icon' => 'factory',
+                'title' => 'Production Of Fabric',
+                'text' => 'We do execute stabilization including reweaving & stitch repair details.',
+                'number' => '01',
+            ),
+            array(
+                '_type' => '_',
+                'icon' => 'globe',
+                'title' => 'Exportation Globally',
+                'text' => 'Assist collection strategies, storage, application and pest production.',
+                'number' => '02',
+            ),
+        ),
+    ));
+}
+
+function mastrade_insert_process_track()
+{
+    if (get_option('mastrade_process_track_v1') || !get_option('mastrade_seeded_v1')) {
+        return;
+    }
+
+    $page = get_page_by_path('about-us');
+    if (!$page) {
+        return;
+    }
+
+    if (strpos($page->post_content, 'mastrade-process-track') !== false) {
+        update_option('mastrade_process_track_v1', 1);
+        return;
+    }
+
+    $previous_user = get_current_user_id();
+    if (!current_user_can('unfiltered_html')) {
+        $admins = get_users(array(
+            'role' => 'administrator',
+            'number' => 1,
+            'fields' => 'ID',
+        ));
+        if ($admins) {
+            wp_set_current_user((int) $admins[0]);
+        }
+    }
+
+    wp_update_post(array(
+        'ID' => $page->ID,
+        'post_content' => wp_slash(mastrade_insert_block_after($page->post_content, mastrade_process_track_block(), array(
+            'carbon-fields/mastrade-figures',
+            'carbon-fields/mastrade-page-banner',
+        ))),
+    ));
+
+    update_option('mastrade_process_track_v1', 1);
+
+    if ($previous_user) {
+        wp_set_current_user($previous_user);
+    }
+}
+
+function mastrade_contact_card_icon_ids()
+{
+    return array(
+        'phone' => mastrade_import_image('contact-icon-phone.png'),
+        'email' => mastrade_import_image('contact-icon-email.png'),
+        'pin' => mastrade_import_image('contact-icon-pin.png'),
+        'calendar' => mastrade_import_image('contact-icon-calendar.png'),
+    );
+}
+
+function mastrade_contact_cards_block()
+{
+    $icons = mastrade_contact_card_icon_ids();
+
+    return mastrade_block('mastrade-contact-cards', array(
+        'cards' => array(
+            array(
+                '_type' => '_',
+                '_id' => 'cf-contactcardphone',
+                'icon' => 'phone',
+                'image' => $icons['phone'],
+                'title' => 'Hotline Number',
+                'text' => "WhatsApp: +(880) 1319-507 112\nMobile: +(880) 1319-507 112",
+            ),
+            array(
+                '_type' => '_',
+                '_id' => 'cf-contactcardemail',
+                'icon' => 'email',
+                'image' => $icons['email'],
+                'title' => 'Support Email',
+                'text' => 'omar@reactivesynergy.com',
+            ),
+            array(
+                '_type' => '_',
+                '_id' => 'cf-contactcardpin',
+                'icon' => 'pin',
+                'image' => $icons['pin'],
+                'title' => 'Office Address',
+                'text' => "House No. 06 (Ground Floor)\nRoad No. 04, Sector No. 13,\nUttara Model Town Dhaka-1230.",
+            ),
+            array(
+                '_type' => '_',
+                '_id' => 'cf-contactcardcalendar',
+                'icon' => 'calendar',
+                'image' => $icons['calendar'],
+                'title' => 'Working Days',
+                'text' => "Mon to Fri - 09:00am To 06:00pm\nSaturday to Sunday - Closed",
+            ),
+        ),
+    ));
+}
+
+function mastrade_insert_contact_cards()
+{
+    if (get_option('mastrade_contact_cards_v1') || !get_option('mastrade_seeded_v1')) {
+        return;
+    }
+
+    $page = get_page_by_path('contact-us');
+    if (!$page) {
+        return;
+    }
+
+    if (strpos($page->post_content, 'mastrade-contact-cards') !== false) {
+        update_option('mastrade_contact_cards_v1', 1);
+        return;
+    }
+
+    $previous_user = get_current_user_id();
+    if (!current_user_can('unfiltered_html')) {
+        $admins = get_users(array(
+            'role' => 'administrator',
+            'number' => 1,
+            'fields' => 'ID',
+        ));
+        if ($admins) {
+            wp_set_current_user((int) $admins[0]);
+        }
+    }
+
+    wp_update_post(array(
+        'ID' => $page->ID,
+        'post_content' => wp_slash(mastrade_insert_block_after($page->post_content, mastrade_contact_cards_block(), array(
+            'carbon-fields/mastrade-page-banner',
+        ))),
+    ));
+
+    update_option('mastrade_contact_cards_v1', 1);
+
+    if ($previous_user) {
+        wp_set_current_user($previous_user);
+    }
+}
+
+function mastrade_seed_contact_card_icons()
+{
+    if (get_option('mastrade_contact_card_icons_v1') || !get_option('mastrade_seeded_v1')) {
+        return;
+    }
+
+    $page = get_page_by_path('contact-us');
+    if (!$page || strpos($page->post_content, 'mastrade-contact-cards') === false) {
+        return;
+    }
+
+    if (!preg_match('/<!-- wp:carbon-fields\/mastrade-contact-cards\s+(\{.*?\})\s+\/-->/s', $page->post_content, $match)) {
+        return;
+    }
+
+    $data = json_decode($match[1], true);
+    if (!is_array($data) || empty($data['data']['cards']) || !is_array($data['data']['cards'])) {
+        return;
+    }
+
+    $icons = mastrade_contact_card_icon_ids();
+    $order = array('phone', 'email', 'pin', 'calendar');
+    if (in_array(0, $icons, true)) {
+        return;
+    }
+
+    foreach ($data['data']['cards'] as $index => $card) {
+        if (!empty($card['image'])) {
+            continue;
+        }
+        $key = $card['icon'] ?? ($order[$index] ?? '');
+        if (!empty($icons[$key])) {
+            $data['data']['cards'][$index]['image'] = $icons[$key];
+        }
+    }
+
+    $block = '<!-- wp:carbon-fields/mastrade-contact-cards ' . wp_json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . " /-->\n";
+    $content = preg_replace('/<!-- wp:carbon-fields\/mastrade-contact-cards\s+\{.*?\}\s+\/-->\s*/s', $block, $page->post_content, 1);
+    if (!is_string($content) || $content === $page->post_content) {
+        return;
+    }
+
+    $previous_user = get_current_user_id();
+    if (!current_user_can('unfiltered_html')) {
+        $admins = get_users(array(
+            'role' => 'administrator',
+            'number' => 1,
+            'fields' => 'ID',
+        ));
+        if ($admins) {
+            wp_set_current_user((int) $admins[0]);
+        }
+    }
+
+    wp_update_post(array(
+        'ID' => $page->ID,
+        'post_content' => wp_slash($content),
+    ));
+
+    update_option('mastrade_contact_card_icons_v1', 1);
+
+    if ($previous_user) {
+        wp_set_current_user($previous_user);
+    }
+}
+
+function mastrade_fix_contact_card_ids()
+{
+    if (get_option('mastrade_contact_card_ids_v1') || !get_option('mastrade_seeded_v1')) {
+        return;
+    }
+
+    $page = get_page_by_path('contact-us');
+    if (!$page || !preg_match('/<!-- wp:carbon-fields\/mastrade-contact-cards\s+(\{.*?\})\s+\/-->/s', $page->post_content, $match)) {
+        return;
+    }
+
+    $data = json_decode($match[1], true);
+    if (!is_array($data) || empty($data['data']['cards']) || !is_array($data['data']['cards'])) {
+        return;
+    }
+
+    $ids = array(
+        'cf-contactcardphone',
+        'cf-contactcardemail',
+        'cf-contactcardpin',
+        'cf-contactcardcalendar',
+    );
+    $changed = false;
+
+    foreach ($data['data']['cards'] as $index => $card) {
+        if (!empty($card['_id'])) {
+            continue;
+        }
+        $data['data']['cards'][$index]['_id'] = $ids[$index] ?? ('cf-contactcard' . ($index + 1));
+        if (empty($data['data']['cards'][$index]['_type'])) {
+            $data['data']['cards'][$index]['_type'] = '_';
+        }
+        $changed = true;
+    }
+
+    if (!$changed) {
+        update_option('mastrade_contact_card_ids_v1', 1);
+        return;
+    }
+
+    $block = '<!-- wp:carbon-fields/mastrade-contact-cards ' . wp_json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . " /-->\n";
+    $content = preg_replace('/<!-- wp:carbon-fields\/mastrade-contact-cards\s+\{.*?\}\s+\/-->\s*/s', $block, $page->post_content, 1);
+    if (!is_string($content) || $content === $page->post_content) {
+        return;
+    }
+
+    $previous_user = get_current_user_id();
+    if (!current_user_can('unfiltered_html')) {
+        $admins = get_users(array(
+            'role' => 'administrator',
+            'number' => 1,
+            'fields' => 'ID',
+        ));
+        if ($admins) {
+            wp_set_current_user((int) $admins[0]);
+        }
+    }
+
+    wp_update_post(array(
+        'ID' => $page->ID,
+        'post_content' => wp_slash($content),
+    ));
+
+    update_option('mastrade_contact_card_ids_v1', 1);
 
     if ($previous_user) {
         wp_set_current_user($previous_user);

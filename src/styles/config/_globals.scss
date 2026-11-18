@@ -8,6 +8,15 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-height) + 12px);
+
+    &.lenis {
+        scroll-behavior: auto;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        scroll-behavior: auto;
+    }
 
     @media (min-width: 601px) {
         min-height: 0 !important;
@@ -40,7 +49,7 @@ body.admin-bar {
 }
 
 body {
-    overflow-x: hidden;
+    overflow-x: clip;
     outline: none;
     -webkit-tap-highlight-color: transparent;
     font-family: var(--font-primary);

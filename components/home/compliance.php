@@ -6,18 +6,33 @@ $heading = $fields['heading'] ?? '';
 $content = $fields['content'] ?? '';
 $button_text = $fields['button_text'] ?? '';
 $button_link = $fields['button_link'] ?? '';
-$image_main = $fields['image_main'] ?? 0;
 $image_detail = $fields['image_detail'] ?? 0;
+$logos = $fields['logos'] ?? array();
 
-if (!mastrade_has_content(array($heading, $content, $button_text, $image_main, $image_detail))) {
+if (!mastrade_has_content(array($heading, $content, $button_text, $image_detail, $logos))) {
     return;
+}
+?>
+<?php
+$logo_images = array();
+foreach ($logos as $logo) {
+    $image = mastrade_image($logo['image'] ?? 0, 'compliance-logo');
+    if ($image) {
+        $logo_images[] = $image;
+    }
 }
 ?>
 <section class="compliance fade-up">
     <div class="container compliance-grid">
-        <?php if ($image_main || $image_detail) : ?>
+        <?php if ($logo_images || $image_detail) : ?>
             <div class="compliance-photos reveal reveal-zoom">
-                <?php echo mastrade_image($image_main, 'photo-main'); ?>
+                <?php if ($logo_images) : ?>
+                    <div class="compliance-logos">
+                        <?php foreach ($logo_images as $image) : ?>
+                            <div class="compliance-logo"><?php echo $image; ?></div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
                 <?php echo mastrade_image($image_detail, 'photo-detail'); ?>
             </div>
         <?php endif; ?>
